@@ -52,7 +52,7 @@ npx cypress open
 
 3. Click on any spec to run the tests for that page.
 
-Change the value of the `DEV` variable in [`cypress/e2e/dev.ts`](cypress/e2e/dev.ts) to toggle between
+Change the value of the `DEV` variable in [`cypress/e2e/dev.ts`](cypress/e2e/dev.ts) to toggle between the development server and the live website. If you are testing the dev server, make sure it is already running before running any tests.
 
 ## License
 
