@@ -1,6 +1,13 @@
+import { DEV } from "./dev"
+
+const PROD_URL = "https://bright-starlight-9f4a7b.netlify.app"
+const DEV_URL = "http://localhost:5173"
+
+const url = DEV ? DEV_URL : PROD_URL
+
 describe("The dashboard", () => {
   it("should load'", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
@@ -10,17 +17,18 @@ describe("The dashboard", () => {
 
 describe("The search inputs for Basenji dogs ordered by name", () => {
   it("should return results for dogs with one named Arnold at the bottom", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
 
-    cy.get("input[id='headlessui-combobox-input-:r1:']").type("Basenji");
-    cy.get("li[id='headlessui-combobox-option-:rn:']").click();
+    cy.get("input[id^='headlessui-combobox-input']").type("Basenji");
 
-    cy.get('button[id="headlessui-disclosure-button-:r5:"]').click();
-    cy.get('button[id="headlessui-listbox-button-:r7p:"]').click();
-    cy.get('li[id="headlessui-listbox-option-:r7v:"]').click();
+    cy.get('li').contains("Basenji").click();
+
+    cy.get('button[id^="headlessui-disclosure-button"]').click();
+    cy.get('button[id^="headlessui-listbox-button"]').click();
+    cy.get('li[id^="headlessui-listbox-option"]').first().click();
 
     cy.get("button").contains("Search Dogs").click();
 
@@ -30,19 +38,19 @@ describe("The search inputs for Basenji dogs ordered by name", () => {
 
 describe("The search inputs for Basenji dogs ordered by name with a minimum age of 7", () => {
   it("should return results for dogs ordered by name, with Christop", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
 
-    cy.get("input[id='headlessui-combobox-input-:r1:']").type("Basenji");
-    cy.get("li[id='headlessui-combobox-option-:rn:']").click();
+    cy.get("input[id^='headlessui-combobox-input']").type("Basenji");
+    cy.get('li').contains("Basenji").click();
 
     cy.get("input[id='ageMin']").type("7");
 
-    cy.get('button[id="headlessui-disclosure-button-:r5:"]').click();
-    cy.get('button[id="headlessui-listbox-button-:r7p:"]').click();
-    cy.get('li[id="headlessui-listbox-option-:r7v:"]').click();
+    cy.get('button[id^="headlessui-disclosure-button-:r"]').click();
+    cy.get('button[id^="headlessui-listbox-button-:r"]').click();
+    cy.get('li').contains("Age").click();
 
     cy.get("button").contains("Search Dogs").click();
 
@@ -52,7 +60,7 @@ describe("The search inputs for Basenji dogs ordered by name with a minimum age 
 
 describe("Searching for all the dogs and clicking on the next button", () => {
   it("should return a list of dogs on the next page, with a dog named Titus at the top", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
@@ -66,7 +74,7 @@ describe("Searching for all the dogs and clicking on the next button", () => {
 
 describe("Selecting all the dogs on the first page and clicking match", () => {
   it("should return a matched dog on the match page", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
@@ -86,7 +94,7 @@ describe("Selecting all the dogs on the first page and clicking match", () => {
 
 describe("Clicking on the log out button", () => {
   it("should take you to the login page", () => {
-    cy.visit("localhost:5173/login");
+    cy.visit(`${url}/login`);
     cy.get("input[id='name']").type("Bob");
     cy.get("input[id='email']").type("bob@gmail.com");
     cy.get("input[value='Log in']").contains("Log in").click();
@@ -98,7 +106,7 @@ describe("Clicking on the log out button", () => {
 
 describe("Navigating to the dashboard page without logging in ", () => {
   it("should fail", () => {
-    cy.visit("localhost:5173/dashboard");
+    cy.visit(`${url}/dashboard`);
     cy.url().should("include", "/login");
   });
 });
