@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Input tailwind style */
+@layer components {
+  .input {
+    @apply rounded-md p-2 w-full shadow-md mt-1 bg-white text-left;
+  }
+
+  .primary-btn {
+    @apply px-3 py-2 bg-[#300D38] text-white w-full rounded-md font-medium hover:bg-[#890075] transition duration-200 ease-in-out;
+  }
+
+  .secondary-btn {
+    @apply px-3 py-2 w-full hover:bg-[#890075] bg-[#FFA900] text-[#300D38] hover:text-white font-semibold rounded-md transition duration-[50ms] ease-in-out
+  }
+}
