@@ -147,11 +147,10 @@ const Dashboard = () => {
   };
 
   const handleDogSelection = (dog: { id: string; name: string }) => {
-    const prevSelection = [...dogSelection];
+    let prevSelection = [...dogSelection];
 
     if (prevSelection.map((dog) => dog.id).includes(dog.id)) {
-      const index = prevSelection.indexOf(dog);
-      prevSelection.splice(index, 1);
+      prevSelection = prevSelection.filter((d) => d.id !== dog.id)
     } else {
       prevSelection.push(dog);
     }
